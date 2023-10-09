@@ -17,9 +17,47 @@
   <link rel="shortcut icon" href="./apple-touch-icon.png">
 
   <style>
+    html,body{
+      padding: 0;
+      margin: 0;
+    }
 
     body{
       font-family: "Meiryo","Hiragino Maru Gothic Pro",sans-serif;
+      background-attachment: fixed;
+      background-image: url("./back.png");
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* iOS用  */
+    body::before{
+      content:"";
+      display:block;
+      position:fixed;
+      top:0;
+      left:0;
+      z-index:-1;
+      width:100%;
+      height:100vh;
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-image:url("./back.png");
+      background-size: cover;
+    }
+
+    .container{
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255,255,255, 0.9);
+      padding: 0;
+      margin: 0;
+    }
+
+    h1{
+      margin: 0;
+      padding: 0;
     }
     
     input {
@@ -34,22 +72,23 @@
     }
 
     #exp{
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: bolder;
-      height: 45px;	
       background: #007bbb;
       color: #fff;
-      padding: .5em;
+      padding: .8em;
       cursor: pointer;
       border-radius: .3em;
     }
     
     #result {
-      margin: 1em;
+      margin: 1em 1em 0 1em;
+      padding: 0;
     }
 
     .item_title {
       text-decoration: none;
+      font-size: 1.2em;
       color: rgba(0, 119, 184, 1);
       font-weight: bolder;
     }
@@ -57,7 +96,7 @@
     .item_title b {
       color:#666600;
       background-color:#ffffdd;
-      font-weight:bold;
+      font-weight: bold;
       border:1px solid #bbbb00;
       margin:0 2px 0 2px;
       padding:0 2px 0 2px; 
@@ -65,24 +104,38 @@
 
     .item_ex {
       background: #fff;
-      margin: 0.5em 2em 1em 1em;
+      margin: 0.5em;
       padding: 0.5em;
       font-size: smaller;
       border-radius: .5em;
     }
 
     .item_ex b {
-      color:#666600;
-      background-color:#ffffdd;
-      font-weight:bold;
-      border:1px solid #bbbb00;
-      margin:0 2px 0 2px;
-      padding:0 2px 0 2px;
+      color: #666600;
+      background-color: #ffffdd;
+      font-weight: bold;
+      border: 1px solid #bbbb00;
+      margin: 0 2px 0 2px;
+      padding: 0 2px 0 2px;
     }
 
     .item {
       border-top: 1px dotted #000;
       padding-top: 1em;
+      text-align: left;
+    }
+
+    .item:last-of-type{
+      border-bottom: 1px dotted #000;
+    }
+
+    .class_name{
+      border: 1px solid #000000;
+      padding: 5px;
+    }
+
+    .category_name{
+      color: red;
     }
 
     ul{
@@ -95,7 +148,9 @@
       display: inline-block;
       border: 2px solid #007bbb;
       color: #007bbb;
-      padding: 1em;
+      background: #ffffff;
+      padding: .5em;
+      margin: 0;
       border-radius: .5em;
       margin-right: .5em;
       cursor: pointer;
@@ -107,19 +162,22 @@
 
 <body>
   <center>
+    <div class="container">
     <h1 class="post_title">絶滅危惧種レッドリスト</h1>
 
     <p>キーワードを入力すると絞り込んで検索することができます。</p>
 
-    <input type="text" name="text1" id="text" size="15" autocomplete="off" autofocus placeholder="キーワード検索" />  <span id="exp">リセット</span><br><br>
+    <input type="text" name="text1" id="text" size="15" autocomplete="off" autofocus placeholder="キーワード検索" />  <span id="exp" class="search">検 索</span>  <span id="exp" class="reset">リセット</span><br><br>
 
     <ul id="page_list"><div id="koumoku"></div></ul>
 
     <p><span id="resultCount"></span></p>
 
-  </center>
 
-  <div id="result"></div>
+    <div id="result"></div>
+
+    </div>
+  </center>
 
   <script src="data.json"></script>
 
@@ -157,7 +215,7 @@
 
               bunkatu[i] += '<div class="item">' +
               '<span class="item_title">' + data[i * i_bunkatu + mm].name + '</span>' +
-              '<div class="item_ex">' + data[i * i_bunkatu + mm].scientific + '</div>' +
+              '<div class="item_ex">' + "学名：" + data[i * i_bunkatu + mm].scientific + "<br><br><span class='class_name'>" + data[i * i_bunkatu + mm].class + "</span>　" + "<span class='category_name'>" + data[i * i_bunkatu + mm].category + "</span>" +'</div>' +
               '</div>';
 
               count = count + 1;
@@ -206,7 +264,7 @@
 
 
   /* 検索ボタン押下時 */
-      document.getElementById('text').addEventListener('keyup',
+      document.querySelector('.search').addEventListener('click',
 
         async () => {
 
@@ -232,7 +290,7 @@
               if (data[j].name.indexOf(kensaku) != -1 || data[j].scientific.indexOf(kensaku) != -1) {
                 kensaku_arr[j] = '<div class="item">' +
                 '<span class="item_title">' + data[j].name.replaceAll(kensaku, "<b>" + kensaku + "</b>") + '</span>' +
-                '<div class="item_ex">' + data[j].scientific.replaceAll(kensaku, "<b>" + kensaku + "</b>") + '</div>' +
+                '<div class="item_ex">' + "学名：" + data[j].scientific.replaceAll(kensaku, "<b>" + kensaku + "</b>")  + "<br><br><span class='class_name'>" + data[j].class + "</span>　" + "<span class='category_name'>" + data[j].category + "</span>" + '</div>' +
                 '</div>';
               }else{
                 kensaku_arr[j] = "";
@@ -319,7 +377,7 @@
 
         );
 
-      document.getElementById('exp').addEventListener('click',
+      document.querySelector('.reset').addEventListener('click',
 
         async () =>{
 
