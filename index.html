@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta property="og:title" content="絶滅危惧種レッドリスト" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="./ogp.png" />
+  <meta property="og:image" content="https://endangered8species.netlify.app/ogp.png" />
   <meta name="description" content="絶滅危惧種レッドリストのデータベースは、地球上の貴重な生物多様性を保護し、科学的な情報を提供するために生まれました。約束された未来のために、絶滅危惧種の保護と維持を支援します。" />
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="絶滅危惧種レッドリスト" />
-  <meta name="twitter:image" content="./ogp.png" />
+  <meta name="twitter:image" content="https://endangered8species.netlify.app/ogp.png" />
   <meta name="author" content="仁志">
   <meta name="keywords" content="絶滅危惧種,レッドリスト,環境省"/>
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -67,7 +67,7 @@
       font-weight: bolder;
       height: 45px;
       width: 40%;
-      margin-bottom: 15px;
+      margin: 15px 0 15px 0;
     }
     input::-webkit-input-placeholder {
       color: rgba(0, 119, 184, 0.5);
@@ -164,6 +164,10 @@
       h1 br{display:none;}
     }
 
+    .small{
+      font-size: 5px;
+    }
+
   </style>
 </head>
 
@@ -173,6 +177,8 @@
     <h1 class="post_title">絶滅危惧種<br>レッドリスト</h1>
 
     <p>キーワードを入力して絞り込み検索できます。</p>
+
+    <p class="small">レッドリスト/レッドデータブック_第４次レッドリスト、環境省、<a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC BY</a> を<a href="https://hitoshi2s.netlify.app/" target="_blank">仁志</a>が加工・編集して作成</p>
 
     <input type="text" name="text1" id="text" size="15" autocomplete="off" autofocus placeholder="キーワード検索" />  <span id="exp" class="search">検 索</span>  <span id="exp" class="reset">リセット</span><br><br>
 
