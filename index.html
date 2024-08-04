@@ -256,8 +256,8 @@
       result.innerHTML = bunkatu[0];
 
       let list = document.querySelector("#page_list");
-      list.childNodes[0].childNodes[0].style.backgroundColor = "#007bbb";
-      list.childNodes[0].childNodes[0].style.color = "#ffffff";
+      list.childNodes[1].childNodes[0].style.backgroundColor = "#007bbb";
+      list.childNodes[1].childNodes[0].style.color = "#ffffff";
 
       resultCount.innerHTML = '<b>' + count + '</b> 件見つかりました（' + max + '件中）';
 
@@ -271,13 +271,13 @@
 
           if (i == x - 1) {
 
-            list.childNodes[0].childNodes[i].style.backgroundColor = "#007bbb";
-            list.childNodes[0].childNodes[i].style.color = "#ffffff";
+            list.childNodes[1].childNodes[i].style.backgroundColor = "#007bbb";
+            list.childNodes[1].childNodes[i].style.color = "#ffffff";
 
           } else {
 
-            list.childNodes[0].childNodes[i].style.backgroundColor = "#ffffff";
-            list.childNodes[0].childNodes[i].style.color = "#007bbb";
+            list.childNodes[1].childNodes[i].style.backgroundColor = "#ffffff";
+            list.childNodes[1].childNodes[i].style.color = "#007bbb";
 
           }
 
@@ -327,7 +327,8 @@
           let new_arr = kensaku_arr.filter(function (x) {
             return !(x == "");
           })
-          console.log(new_arr);
+          
+          //console.log(new_arr);
 
           count = new_arr.length;
 
@@ -365,8 +366,8 @@
           result.innerHTML = bunkatu2[0];
 
           let list = document.querySelector("#page_list");
-          list.childNodes[0].childNodes[0].style.backgroundColor = "#007bbb";
-          list.childNodes[0].childNodes[0].style.color = "#ffffff";
+          list.childNodes[1].childNodes[0].style.backgroundColor = "#007bbb";
+          list.childNodes[1].childNodes[0].style.color = "#ffffff";
 
           resultCount.innerHTML = '<b>' + count + '</b> 件見つかりました（' + max + '件中）';
 
@@ -382,13 +383,13 @@
 
               if (i == x - 1) {
 
-                list.childNodes[0].childNodes[i].style.backgroundColor = "#007bbb";
-                list.childNodes[0].childNodes[i].style.color = "#ffffff";
+                list.childNodes[1].childNodes[i].style.backgroundColor = "#007bbb";
+                list.childNodes[1].childNodes[i].style.color = "#ffffff";
 
               } else {
 
-                list.childNodes[0].childNodes[i].style.backgroundColor = "#ffffff";
-                list.childNodes[0].childNodes[i].style.color = "#007bbb";
+                list.childNodes[1].childNodes[i].style.backgroundColor = "#ffffff";
+                list.childNodes[1].childNodes[i].style.color = "#007bbb";
 
               }
 
