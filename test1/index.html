@@ -42,21 +42,66 @@
     body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: 100%;
     }
 
     body {
-      background: #000000;
       color: #ffffff;
+      font-family: "Source Han Serif JP", "Noto Serif CJK JP", "游明朝体", "Yu Mincho", YuMincho, serif;
+      background-attachment: fixed;
+      background-image: url("./background.jpg");
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+
+    /* iOS用  */
+    body::before {
+      content: "";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100vh;
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-image: url("./background.jpg");
+      background-size: cover;
     }
 
     .nav_button {
-      border: 1px solid #00FFFF;
+      border: 3px solid #00FFFF;
       width: 250px;
       border-radius: 5em;
     }
 
-    .menu1 {}
+    .menu1 {
+      position: relative;
+      left: -50px;
+      color: #ff0;
+    }
 
+    .menu1-2 {
+      position: relative;
+      right: -50px;
+      color: #ff0;
+    }
+
+    .menu1-3 {
+      position: relative;
+      left: -18px;
+      color: #ff0;
+    }
+
+    .menu1-4 {
+      position: relative;
+      right: -18px;
+      color: #ff0;
+    }
 
     /* From Uiverse.io by Nawsome */
     .svg-frame {
@@ -127,7 +172,7 @@
 
   <center>
 
-    <h1 class="text-3xl mt-5">絶滅危惧種<br>レッドリスト</h1>
+    <h1 class="text-3xl mt-10">絶滅危惧種<br>レッドリスト</h1>
 
     <div class="svg-frame">
       <svg style="--i:0;--j:0;">
@@ -211,13 +256,17 @@
 
     </div>
 
-    <div class="nav_button py-3 text-xl manu1">はじめに</div>
+    <div class="nav_button py-3 text-xl"><span class="menu1"><i class="fa-regular fa-bookmark"></i></span>はじめに<span
+        class="menu1-2"><i class="fa-regular fa-user"></i></span></div>
 
-    <div class="nav_button py-3 mt-5 text-xl manu2">動物編</div>
+    <div class="nav_button py-3 mt-5 text-xl menu2"><span class="menu1"><i class="fa-solid fa-horse"></i></span>動 物 編<span
+      class="menu1-2"><i class="fa-solid fa-kiwi-bird"></i></span></div>
 
-    <div class="nav_button py-3 mt-5 text-xl manu2">植物編</div>
+    <div class="nav_button py-3 mt-5 text-xl menu2"><span class="menu1"><i class="fa-brands fa-pagelines"></i></span>植 物 編<span
+      class="menu1-2"><i class="fa-solid fa-seedling"></i></span></div>
 
-    <div class="nav_button py-3 mt-5 text-xl manu2">オープンデータ</div>
+    <div class="nav_button py-3 mt-5 text-xl menu2"><span class="menu1-3"><i class="fa-solid fa-circle-info"></i></span>オープンデータ<span
+      class="menu1-4"><i class="fa-solid fa-database"></i></span></div>
 
 
   </center>
