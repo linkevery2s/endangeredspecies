@@ -44,13 +44,14 @@
       padding: 0;
       width: 100%;
       height: 100%;
+      z-index: 0;
     }
 
     body {
       color: #ffffff;
       font-family: "Source Han Serif JP", "Noto Serif CJK JP", "游明朝体", "Yu Mincho", YuMincho, serif;
       background-attachment: fixed;
-      background-image: url("./background.jpg");
+      background-image: url("./back2.jpg");
       background-position: top center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -69,12 +70,12 @@
       height: 100vh;
       background-repeat: no-repeat;
       background-position: top center;
-      background-image: url("./background.jpg");
+      background-image: url("./back2.jpg");
       background-size: cover;
     }
 
     .nav_button {
-      border: 3px solid #00FFFF;
+      border: 2px solid #00FFFF;
       width: 250px;
       border-radius: 5em;
     }
@@ -93,13 +94,13 @@
 
     .menu1-3 {
       position: relative;
-      left: -18px;
+      left: -17px;
       color: #ff0;
     }
 
     .menu1-4 {
       position: relative;
-      right: -18px;
+      right: -17px;
       color: #ff0;
     }
 
@@ -164,6 +165,70 @@
       to {
         transform: rotate(360deg);
       }
+    }
+
+    iframe {
+      margin: 0;
+      padding: 0;
+      border: none;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+
+    #overlay {
+      width: 100%;
+      height: 120vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, .8);
+      display: none;
+      z-index: 2;
+    }
+
+    #animal {
+      display: none;
+      height: 95%;
+      max-height: 800px;
+      left: 50%;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 95%;
+      max-width: 600px;
+      z-index: 11;
+      background: #ffffff;
+      padding: .3em;
+      border-radius: .3em;
+    }
+
+    #closed-btn,
+    #closed-btn2,
+    #closed-btn3,
+    #closed-btn4,
+    #closed-btn5 {
+      position: absolute;
+      right: 4px;
+      color: #ffffff;
+      background: #eb6ea5;
+      cursor: pointer;
+      text-align: center;
+      font-weight: bolder;
+      border-radius: .3em;
+      z-index: 12;
+    }
+
+    #closed-btn:hover,
+    #closed-btn2:hover,
+    #closed-btn3:hover,
+    #closed-btn4:hover,
+    #closed-btn5:hover {
+      background: #ffffff;
+      color: #9d5b8b;
+      border: 1px solid #9d5b8b;
     }
   </style>
 </head>
@@ -256,21 +321,66 @@
 
     </div>
 
-    <div class="nav_button py-3 text-xl"><span class="menu1"><i class="fa-regular fa-bookmark"></i></span>はじめに<span
-        class="menu1-2"><i class="fa-regular fa-user"></i></span></div>
+    <div class="nav_button py-3 text-xl beginner"><span class="menu1"><i
+          class="fa-regular fa-bookmark"></i></span>はじめに<span class="menu1-2"><i class="fa-regular fa-user"></i></span>
+    </div>
 
-    <div class="nav_button py-3 mt-5 text-xl menu2"><span class="menu1"><i class="fa-solid fa-horse"></i></span>動 物 編<span
-      class="menu1-2"><i class="fa-solid fa-kiwi-bird"></i></span></div>
+    <div class="nav_button py-3 mt-5 text-xl animal menu2"><span class="menu1"><i class="fa-solid fa-horse"></i></span>動
+      物
+      編<span class="menu1-2"><i class="fa-solid fa-kiwi-bird"></i></span></div>
 
-    <div class="nav_button py-3 mt-5 text-xl menu2"><span class="menu1"><i class="fa-brands fa-pagelines"></i></span>植 物 編<span
-      class="menu1-2"><i class="fa-solid fa-seedling"></i></span></div>
+    <div class="nav_button py-3 mt-5 text-xl plant menu2"><span class="menu1"><i
+          class="fa-brands fa-pagelines"></i></span>植 物
+      編<span class="menu1-2"><i class="fa-solid fa-seedling"></i></span></div>
 
-    <div class="nav_button py-3 mt-5 text-xl menu2"><span class="menu1-3"><i class="fa-solid fa-circle-info"></i></span>オープンデータ<span
-      class="menu1-4"><i class="fa-solid fa-database"></i></span></div>
-
+    <div class="nav_button py-3 mt-5 text-xl opendata menu2"><span class="menu1-3"><i
+          class="fa-solid fa-circle-info"></i></span>オープンデータ<span class="menu1-4"><i
+          class="fa-solid fa-database"></i></span></div>
 
   </center>
 
+  <!-- ポップアップ用のoverlay -->
+  <div id="overlay"></div>
+
+  <div id="animal" class="text-center"><span id="closed-btn" class="py-2 px-3 text-xs">閉じる</span>
+    <iframe src="../index.html" width="100%" height="100%" border="0"></iframe>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <script type="module">
+
+    /* メニューポップアップ表示 */
+    const beginner_btn = document.querySelector('.beginner');
+    const animal_btn = document.querySelector('.animal');
+
+    animal_btn.addEventListener('click', () => {
+      $('#overlay').fadeIn();
+      $('#animal').fadeIn();
+    });
+
+
+    const overlay = document.querySelector('#overlay');
+    const closed_btn = document.querySelector("#closed-btn");
+
+    overlay.addEventListener('click', () => {
+      $('#overlay').fadeOut();
+      $('#animal').fadeOut();
+      $('#beginner').fadeOut();
+      $('#manual').fadeOut();
+      $('#share').fadeOut();
+      $('#search').fadeOut();
+      $('#image-src').fadeOut();
+    });
+
+    closed_btn.addEventListener('click', () => {
+      $('#overlay').fadeOut();
+      $('#animal').fadeOut();
+    });
+
+
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-MPP84V2NHB"></script>
