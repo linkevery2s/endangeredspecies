@@ -78,6 +78,7 @@
       border: 2px solid #00FFFF;
       width: 250px;
       border-radius: 5em;
+      cursor: pointer;
     }
 
     .menu1 {
@@ -176,6 +177,8 @@
       position: absolute;
       transform: translate(-50%, -50%);
       z-index: 1;
+      border-radius: .3em;
+      background: rgba(255, 255, 255, .9)
     }
 
     #overlay {
@@ -189,7 +192,9 @@
       z-index: 2;
     }
 
-    #animal {
+    #beginner,
+    #animal,
+    #plant {
       display: none;
       height: 95%;
       max-height: 800px;
@@ -200,7 +205,6 @@
       width: 95%;
       max-width: 600px;
       z-index: 11;
-      background: #ffffff;
       padding: .3em;
       border-radius: .3em;
     }
@@ -213,7 +217,7 @@
       position: absolute;
       right: 4px;
       color: #ffffff;
-      background: #eb6ea5;
+      background: #1e50a2;
       cursor: pointer;
       text-align: center;
       font-weight: bolder;
@@ -227,8 +231,12 @@
     #closed-btn4:hover,
     #closed-btn5:hover {
       background: #ffffff;
-      color: #9d5b8b;
-      border: 1px solid #9d5b8b;
+      color: #1e50a2;
+      border: 1px solid #1e50a2;
+    }
+
+    .footer a{
+      border-bottom: 1px dotted #ffffff;
     }
   </style>
 </head>
@@ -237,7 +245,7 @@
 
   <center>
 
-    <h1 class="text-3xl mt-10">絶滅危惧種<br>レッドリスト</h1>
+    <h1 class="text-4xl mt-10">絶滅危惧種<br>レッドリスト</h1>
 
     <div class="svg-frame">
       <svg style="--i:0;--j:0;">
@@ -337,32 +345,65 @@
           class="fa-solid fa-circle-info"></i></span>オープンデータ<span class="menu1-4"><i
           class="fa-solid fa-database"></i></span></div>
 
+    <img class="mt-10" src="./qr.png" alt="QR画像">
+
+    <div class="footer mt-10 pb-3">
+
+      <p class="text-xs"><a href="https://github.com/linkevery2s/endangeredspecies" target="_blank">src on GitHub</a>.
+        <i class="fa-regular fa-copyright"></i> <a href="https://hitoshi2s.netlify.app/" target="_blank">齋藤
+          仁志</a>. <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSf-WMoBJRTdA1bmN_SmQ-bsNGeLs1l737d3c9BUNuErjH-KBw/viewform"
+          target="_blank">お問い合わせ</a>
+      </p>
+
+    </div>
+
   </center>
 
   <!-- ポップアップ用のoverlay -->
   <div id="overlay"></div>
 
-  <div id="animal" class="text-center"><span id="closed-btn" class="py-2 px-3 text-xs">閉じる</span>
-    <iframe src="../index.html" width="100%" height="100%" border="0"></iframe>
+  <div id="beginner" class="text-center"><span id="closed-btn" class="py-2 px-3 text-xs">閉じる</span>
+    <iframe src="./beginner.html" width="100%" height="100%" border="0"></iframe>
+  </div>
+
+  <div id="animal" class="text-center"><span id="closed-btn2" class="py-2 px-3 text-xs">閉じる</span>
+    <iframe src="./animal.html" width="100%" height="100%" border="0"></iframe>
+  </div>
+
+  <div id="plant" class="text-center"><span id="closed-btn3" class="py-2 px-3 text-xs">閉じる</span>
+    <iframe src="./plant.html" width="100%" height="100%" border="0"></iframe>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <script type="module">
 
     /* メニューポップアップ表示 */
     const beginner_btn = document.querySelector('.beginner');
     const animal_btn = document.querySelector('.animal');
+    const plant_btn = document.querySelector('.plant');
+
+    beginner_btn.addEventListener('click', () => {
+      $('#overlay').fadeIn();
+      $('#beginner').fadeIn();
+    });
 
     animal_btn.addEventListener('click', () => {
       $('#overlay').fadeIn();
       $('#animal').fadeIn();
     });
 
+    plant_btn.addEventListener('click', () => {
+      $('#overlay').fadeIn();
+      $('#plant').fadeIn();
+    });
 
     const overlay = document.querySelector('#overlay');
     const closed_btn = document.querySelector("#closed-btn");
+    const closed_btn2 = document.querySelector("#closed-btn2");
+    const closed_btn3 = document.querySelector("#closed-btn3");
 
     overlay.addEventListener('click', () => {
       $('#overlay').fadeOut();
@@ -376,9 +417,18 @@
 
     closed_btn.addEventListener('click', () => {
       $('#overlay').fadeOut();
+      $('#beginner').fadeOut();
+    });
+
+    closed_btn2.addEventListener('click', () => {
+      $('#overlay').fadeOut();
       $('#animal').fadeOut();
     });
 
+    closed_btn3.addEventListener('click', () => {
+      $('#overlay').fadeOut();
+      $('#plant').fadeOut();
+    });
 
   </script>
 

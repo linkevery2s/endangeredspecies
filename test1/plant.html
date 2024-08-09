@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<title>動物編</title>
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="UTF-8" name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: "Source Han Serif JP", "Noto Serif CJK JP", "游明朝体", "Yu Mincho", YuMincho, serif;
+    }
+
+    .container {
+      width: 100%;
+      height: 150%;
+      max-width: 700px;
+      padding: 0;
+      margin: 0;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 20px 0 0 0;
+    }
+
+    input {
+      color: rgba(0, 119, 184, 0.5);
+      border: 1px solid rgba(0, 0, 0, .5);
+      font-size: 1.2em;
+      font-weight: bolder;
+      height: 45px;
+      width: 60%;
+      margin: 15px 0 15px 0;
+    }
+
+    input::-webkit-input-placeholder {
+      color: rgba(0, 119, 184, 0.5);
+    }
+
+    #exp {
+      font-size: 1em;
+      font-weight: bolder;
+      background: #1e50a2;
+      color: #fff;
+      padding: .8em;
+      cursor: pointer;
+      border-radius: .3em;
+
+    }
+
+    #result {
+      margin: 1em 1em 0 1em;
+      padding: 0;
+    }
+
+    .item_title {
+      text-decoration: none;
+      font-size: 1.2em;
+      color: #1e50a2;
+      font-weight: bolder;
+    }
+
+    .item_title b {
+      color: #666600;
+      background-color: #ffffdd;
+      font-weight: bold;
+      border: 1px solid #bbbb00;
+      margin: 0 2px 0 2px;
+      padding: 0 2px 0 2px;
+    }
+
+    .item_ex {
+      background: #fff;
+      margin: 0.5em;
+      padding: 0.5em;
+      font-size: smaller;
+      border-radius: .5em;
+    }
+
+    .item_ex b {
+      color: #666600;
+      background-color: #ffffdd;
+      font-weight: bold;
+      border: 1px solid #bbbb00;
+      margin: 0 2px 0 2px;
+      padding: 0 2px 0 2px;
+    }
+
+    .item {
+      border-top: 1px dotted #000;
+      padding-top: 1em;
+      text-align: left;
+    }
+
+    .item:last-of-type {
+      border-bottom: 1px dotted #000;
+    }
+
+    .class_name {
+      border: 1px solid #000000;
+      padding: 5px;
+    }
+
+    .category_name {
+      color: red;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+      display: inline-block;
+      border: 2px solid #1e50a2;
+      color: #1e50a2;
+      background: #ffffff;
+      padding: .5em;
+      margin: 0;
+      border-radius: .5em;
+      margin-right: .5em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    @media screen and (min-width: 768px) {
+      h1 br {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <div class="container">
+
+      <input type="text" name="text1" id="text" class="mb-3 pl-2 mt-5" size="15" autocomplete="off" autofocus
+      placeholder="キーワード検索" />
+    <div class="grid gap-2 grid-cols-2 grid-rows-1 mx-5 mb-5">
+      <div id="exp" class="search py-3">検　索</div>
+      <div id="exp" class="reset py-3">リセット</div>
+    </div>
+
+      <ul id="page_list">
+        <div id="koumoku"></div>
+      </ul>
+
+      <p><span id="resultCount"></span></p>
+
+
+      <div id="result"></div>
+
+    </div>
+  </center>
+
+  <script src="data.json"></script>
+
+  <script type="module">
+
+    let i_bunkatu = 250;// 何行にするか
+
+    /* 最初のロード時 */
+    onload = async () => {
+      result.innerHTML = "";
+
+      let kensaku = text.value;
+
+      const max = data.length;
+      let count = 0;
+
+
+
+      let b = Math.ceil(max / i_bunkatu);
+      console.log(b);
+
+      koumoku.innerHTML = "";
+
+      let bunkatu = [];
+
+      for (let i = 0; i < b; i++) {
+        let v = i + 1;
+        koumoku.innerHTML += '<li onclick="kirikae(' + v + ')" class="mt-3">' + v + '</li>';
+
+        bunkatu[i] = "";
+
+        for (let mm = 0; mm < i_bunkatu; mm++) {
+
+          if (i * i_bunkatu + mm < max) {
+
+            bunkatu[i] += '<div class="item">' +
+              '<span class="item_title">' + data[i * i_bunkatu + mm].name + '</span>' +
+              '<div class="item_ex">' + "学名：" + data[i * i_bunkatu + mm].scientific + "<br><br><span class='class_name'>" + data[i * i_bunkatu + mm].class + "</span>　" + "<span class='category_name'>" + data[i * i_bunkatu + mm].category + "</span>" + '</div>' +
+              '</div>';
+
+            count = count + 1;
+
+          }
+          else { }
+        }
+
+      }
+
+      result.innerHTML = bunkatu[0];
+
+      let list = document.querySelector("#page_list");
+      list.childNodes[1].childNodes[0].style.backgroundColor = "#007bbb";
+      list.childNodes[1].childNodes[0].style.color = "#ffffff";
+
+      resultCount.innerHTML = '<b>' + count + '</b> 件見つかりました（' + max + '件中）';
+
+      window.kirikae = (x) => {
+
+        result.innerHTML = "";
+
+        result.innerHTML = bunkatu[x - 1];
+
+        for (let i = 0; i < b; i++) {
+
+          if (i == x - 1) {
+
+            list.childNodes[1].childNodes[i].style.backgroundColor = "#007bbb";
+            list.childNodes[1].childNodes[i].style.color = "#ffffff";
+
+          } else {
+
+            list.childNodes[1].childNodes[i].style.backgroundColor = "#ffffff";
+            list.childNodes[1].childNodes[i].style.color = "#007bbb";
+
+          }
+
+
+
+        }
+
+      }
+
+    }
+
+
+    /* 検索ボタン押下時 */
+    document.querySelector('.search').addEventListener('click',
+
+      async () => {
+
+        if (text.value != "") {
+
+          result.innerHTML = "";
+          koumoku.innerHTML = "";
+
+          let kensaku = text.value;
+
+          let kensaku_arr = [];
+
+          /*let kensaku_b = kensaku.split(/[ 　,、]+/)
+
+          const kensaku_count = kensaku_b.length;
+
+          console.log(kensaku_b);*/
+
+          const max = data.length;
+          let count = 0;
+
+          for (let j = 0; j < max; j++) {
+            if (data[j].name.indexOf(kensaku) != -1 || data[j].scientific.indexOf(kensaku) != -1) {
+              kensaku_arr[j] = '<div class="item">' +
+                '<span class="item_title">' + data[j].name.replaceAll(kensaku, "<b>" + kensaku + "</b>") + '</span>' +
+                '<div class="item_ex">' + "学名：" + data[j].scientific.replaceAll(kensaku, "<b>" + kensaku + "</b>") + "<br><br><span class='class_name'>" + data[j].class + "</span>　" + "<span class='category_name'>" + data[j].category + "</span>" + '</div>' +
+                '</div>';
+            } else {
+              kensaku_arr[j] = "";
+            }
+          }
+
+          let new_arr = kensaku_arr.filter(function (x) {
+            return !(x == "");
+          })
+          
+          //console.log(new_arr);
+
+          count = new_arr.length;
+
+          let b = Math.ceil(count / i_bunkatu);
+          console.log(b);
+
+          /* 検索結果が0の場合 */
+          if (b == 0) {
+            result.innerHTML = "検索結果はありませんでした。別のキーワードを入力してください。";
+            resultCount.innerHTML = '<b>' + b + '</b> 件見つかりました（' + max + '件中）';
+            return false;
+          } else { }
+
+          let bunkatu2 = [];
+
+
+          for (let i = 0; i < b; i++) {
+            let v = i + 1;
+            koumoku.innerHTML += '<li onclick="kirikae2(' + v + ')">' + v + '</li>';
+
+            bunkatu2[i] = "";
+
+            for (let mm = 0; mm < i_bunkatu; mm++) {
+
+              if (i * i_bunkatu + mm < count) {
+
+                bunkatu2[i] += new_arr[i * i_bunkatu + mm];
+              }
+              else { }
+            }
+
+          }
+
+
+          result.innerHTML = bunkatu2[0];
+
+          let list = document.querySelector("#page_list");
+          list.childNodes[1].childNodes[0].style.backgroundColor = "#007bbb";
+          list.childNodes[1].childNodes[0].style.color = "#ffffff";
+
+          resultCount.innerHTML = '<b>' + count + '</b> 件見つかりました（' + max + '件中）';
+
+          window.kirikae2 = (x) => {
+
+            result.innerHTML = "";
+
+            result.innerHTML = bunkatu2[x - 1];
+
+            let list = document.querySelector("#page_list");
+
+            for (let i = 0; i < b; i++) {
+
+              if (i == x - 1) {
+
+                list.childNodes[1].childNodes[i].style.backgroundColor = "#007bbb";
+                list.childNodes[1].childNodes[i].style.color = "#ffffff";
+
+              } else {
+
+                list.childNodes[1].childNodes[i].style.backgroundColor = "#ffffff";
+                list.childNodes[1].childNodes[i].style.color = "#007bbb";
+
+              }
+
+            }
+          }
+
+        } else {
+
+          window.location.reload();
+        }
+
+      }
+
+    );
+
+    document.querySelector('.reset').addEventListener('click',
+
+      async () => {
+
+        window.location.reload();
+
+      }
+    );
+
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-MPP84V2NHB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MPP84V2NHB');
+  </script>
+
+</body>
+
+</html>
